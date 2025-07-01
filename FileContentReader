@@ -1,0 +1,60 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class FileContentReader {
+
+    public static void main(String[] args) {
+
+        Scanner consoleScanner = new Scanner(System.in);
+
+        System.out.println("--- Text File Content Reader ---");
+        System.out.print("Please enter the full path to the text file (e.g., C:\\temp\\myfile.txt or /home/user/myfile.txt): ");
+
+        String filePath = consoleScanner.nextLine();
+
+        Scanner fileScanner = null;
+
+        try {
+
+            File file = new File(filePath);
+
+            if (!file.exists()) {
+                System.out.println("Error: The file '" + filePath + "' does not exist.");
+                return;
+            }
+
+            if (file.isDirectory()) {
+                System.out.println("Error: The path '" + filePath + "' points to a directory, not a file.");
+                return;
+            }
+
+            fileScanner = new Scanner(file);
+
+            System.out.println("\n--- Contents of the file: " + filePath + " ---");
+
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                System.out.println(line);
+            }
+
+            System.out.println("\n--- End of file content ---");
+
+        } catch (FileNotFoundException e) {
+            System.err.println("An error occurred while trying to access the file: " + e.getMessage());
+            System.err.println("Please ensure the path is correct and you have read permissions.");
+        } catch (SecurityException e) {
+            System.err.println("Security error: You do not have permission to read this file. " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            if (fileScanner != null) {
+                fileScanner.close();
+                System.out.println("File scanner closed.");
+            }
+            consoleScanner.close();
+            System.out.println("Console scanner closed.");
+        }
+    }
+}
