@@ -1,0 +1,68 @@
+class Vehicle {
+
+    String brand;
+    int year;
+
+    // Constructor to initialize Vehicle objects
+    public Vehicle(String brand, int year) {
+        this.brand = brand;
+        this.year = year;
+        System.out.println("Vehicle created: " + brand + " (" + year + ")");
+    }
+
+    public void startEngine() {
+        System.out.println("The " + brand + "'s engine starts with a general vehicle sound.");
+    }
+
+    public void displayInfo() {
+        System.out.println("Brand: " + brand + ", Year: " + year);
+    }
+}
+
+class Car extends Vehicle {
+
+    String model;
+
+    public Car(String brand, int year, String model) {
+        super(brand, year); // Call the constructor of the Vehicle superclass
+        this.model = model;
+        System.out.println("Car created: " + brand + " " + model + " (" + year + ")");
+    }
+
+    @Override
+    public void startEngine() {
+        System.out.println("The " + brand + " " + model + "'s engine starts with a distinct car roar!");
+    }
+
+    public void drive() {
+        System.out.println("The " + brand + " " + model + " is now driving.");
+    }
+
+    @Override
+    public void displayInfo() {
+        super.displayInfo();
+        System.out.println("Model: " + model);
+    }
+}
+
+// Main class to demonstrate the concepts
+public class OopDemo {
+    public static void main(String[] args) {
+        System.out.println("--- Demonstrating Classes and Inheritance ---");
+        Vehicle myVehicle = new Vehicle("Generic Motors", 2020);
+        myVehicle.displayInfo();
+        myVehicle.startEngine(); // Calls Vehicle's startEngine()
+        System.out.println();
+
+        Car myCar = new Car("Toyota", 2023, "Camry");
+        myCar.displayInfo();
+        myCar.startEngine();
+        myCar.drive();
+        System.out.println();
+
+        System.out.println("--- Demonstrating Polymorphism (using superclass reference) ---");
+        Vehicle anotherVehicle = new Car("Honda", 2024, "Civic");
+        anotherVehicle.displayInfo();
+        anotherVehicle.startEngine();
+    }
+}
